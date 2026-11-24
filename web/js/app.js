@@ -178,6 +178,7 @@ async function route() {
       return;
     }
   }
+  document.querySelectorAll('.overlay, .dropdown').forEach((o) => o.remove());
   if (!shell) buildShell();
   const my = ++navToken;
   for (const a of shell.nav.querySelectorAll('a[data-path]')) a.classList.toggle('active', path.startsWith(a.dataset.path));
