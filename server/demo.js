@@ -39,7 +39,7 @@ function seed(db) {
       const id = Number(db.run(`INSERT INTO products(company_id,name,sku,barcode,category_id,unit,price,cost,min_stock)
         VALUES(?,?,?,?,?,?,?,?,?)`, cid, name, 'P' + String(i + 1).padStart(3, '0'), '600' + String(1000000 + i * 137),
         cats[cat], unit, price, cost, i % 4 === 0 ? 20 : 10).lastInsertRowid);
-      const qty = i % 7 === 3 ? 6 : 40 + (i * 13) % 80;
+      const qty = i % 7 === 3 ? 60 : 250 + (i * 13) % 80;
       moveStock(db, { companyId: cid, productId: id, warehouseId: w1, qty, type: 'initial', note: 'Stock initial', userId: admin });
       moveStock(db, { companyId: cid, productId: id, warehouseId: w2, qty: 100 + (i * 7) % 50, type: 'initial', note: 'Stock initial', userId: admin });
       return { id, name, price, cost };

@@ -47,6 +47,16 @@ module.exports = (r, { auth, db }) => {
     }
   });
 
+  // ----- Adresses pour connecter les téléphones du même réseau Wi-Fi -----
+  r.get('/server-info', auth('admin'), ({ req }) => {
+    const port = req.socket.localPort;
+    const urls = [];
+    for (const ifs of Object.values(require('os').networkInterfaces())) {
+      for (const i of ifs || []) if (i.family === 'IPv4' && !i.internal) urls.push(`http://${i.address}:${port}`);
+    }
+    return { urls, desktop: !!process.env.MCS_DESKTOP };
+  });
+
   // ----- Sauvegarde complète des données de l'entreprise (JSON) -----
   r.get('/backup', auth('admin'), (ctx) => {
     const cid = ctx.cid;

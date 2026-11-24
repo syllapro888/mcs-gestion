@@ -1,6 +1,6 @@
 'use strict';
 const { fail, str, num, round, nextNumber } = require('../lib');
-const { moveStock, stockOf } = require('../stock');
+const { moveStock } = require('../stock');
 
 module.exports = (r, { auth, db }) => {
   const getPurchase = (cid, id) => {
@@ -67,4 +67,3 @@ module.exports = (r, { auth, db }) => {
   });
 };
 
-module.exports.stockOf = stockOf;
