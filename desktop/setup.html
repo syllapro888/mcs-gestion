@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>MCS Gestion — Premier démarrage</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
+<style>
+  body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background: linear-gradient(135deg, #0e6e5c, #134e4a); min-height: 100vh; display: grid; place-items: center; color: #1f2937; }
+  .box { background: #fff; border-radius: 18px; padding: 34px; width: 92%; max-width: 760px; box-shadow: 0 20px 50px rgba(0,0,0,.3); }
+  h1 { margin: 0 0 4px; text-align: center; color: #0e6e5c; }
+  p.sub { text-align: center; color: #6b7280; margin: 0 0 26px; }
+  .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .choice { border: 2px solid #e5e7eb; border-radius: 14px; padding: 20px; cursor: pointer; transition: .15s; }
+  .choice:hover { border-color: #0e6e5c; background: #f0faf7; }
+  .choice.sel { border-color: #0e6e5c; background: #e5f3ef; }
+  .choice h3 { margin: 6px 0; } .choice .em { font-size: 34px; }
+  .choice ul { padding-left: 18px; color: #4b5563; font-size: 14px; line-height: 1.6; margin: 8px 0 0; }
+  #urlBox { display: none; margin-top: 18px; }
+  input { width: 100%; box-sizing: border-box; padding: 12px; font-size: 16px; border: 1px solid #d1d5db; border-radius: 10px; }
+  button { margin-top: 20px; width: 100%; padding: 14px; font-size: 17px; border: 0; border-radius: 10px; background: #0e6e5c; color: #fff; cursor: pointer; font-weight: 600; }
+  button:disabled { opacity: .5; }
+  .err { color: #dc2626; margin-top: 10px; text-align: center; }
+  @media (max-width: 640px) { .choices { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>Bienvenue dans MCS Gestion</h1>
+  <p class="sub">Comment voulez-vous utiliser l'application sur ce PC ?</p>
+  <div class="choices">
+    <div class="choice" data-mode="local">
+      <div class="em">💻</div><h3>Sur ce PC (hors ligne)</h3>
+      <ul><li>Marche sans internet</li><li>Les données restent sur ce PC</li><li>Les téléphones du même Wi-Fi peuvent se connecter</li><li>Sauvegarde automatique chaque jour</li></ul>
+    </div>
+    <div class="choice" data-mode="distant">
+      <div class="em">🌍</div><h3>Serveur en ligne</h3>
+      <ul><li>Plusieurs boutiques et téléphones partout</li><li>Mêmes données sur tous les appareils</li><li>Besoin d'internet</li></ul>
+    </div>
+  </div>
+  <div id="urlBox">
+    <label>Adresse de votre serveur</label>
+    <input id="url" placeholder="ex : https://gestion.mon-entreprise.com">
+  </div>
+  <button id="go" disabled>Continuer</button>
+  <div class="err" id="err"></div>
+</div>
+<script>
+  let mode = null;
+  const go = document.getElementById('go'), err = document.getElementById('err');
+  document.querySelectorAll('.choice').forEach((c) => c.onclick = () => {
+    document.querySelectorAll('.choice').forEach((x) => x.classList.remove('sel'));
+    c.classList.add('sel'); mode = c.dataset.mode; go.disabled = false;
+    document.getElementById('urlBox').style.display = mode === 'distant' ? 'block' : 'none';
+    if (mode === 'distant') document.getElementById('url').focus();
+  });
+  go.onclick = async () => {
+    err.textContent = ''; go.disabled = true; go.textContent = 'Un instant…';
+    const r = await window.mcs.saveConfig({ mode, url: document.getElementById('url').value });
+    if (!r.ok) { err.textContent = r.error; go.disabled = false; go.textContent = 'Continuer'; }
+  };
+</script>
+</body>
+</html>

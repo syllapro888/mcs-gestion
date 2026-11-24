@@ -1,0 +1,45 @@
+{
+  "name": "mcs-gestion",
+  "productName": "MCS Gestion",
+  "version": "1.0.0",
+  "description": "MCS Gestion : ventes, caisse, stock, dépôts et inventaires",
+  "author": "MCS",
+  "license": "UNLICENSED",
+  "main": "main.js",
+  "scripts": {
+    "prepare-app": "node scripts/prepare.js",
+    "start": "npm run prepare-app && electron .",
+    "self-test": "npm run prepare-app && electron . --self-test",
+    "dist": "npm run prepare-app && electron-builder --win --x64 --publish never"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.2.0"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.0"
+  },
+  "build": {
+    "appId": "com.mcs.gestion",
+    "productName": "MCS Gestion",
+    "copyright": "MCS",
+    "directories": { "output": "dist", "buildResources": "build" },
+    "files": ["main.js", "preload.js", "setup.html", "build/icon.png", "app/**/*", "package.json"],
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "icon": "build/icon.png",
+      "artifactName": "MCS-Gestion-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "MCS Gestion",
+      "installerLanguages": ["fr_FR"],
+      "language": "1036",
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}
