@@ -1,0 +1,9 @@
+node_modules/
+data/
+dist/
+desktop/app/
+desktop/dist/
+*.db
+*.db-wal
+*.db-shm
+.DS_Store
