@@ -3,7 +3,6 @@ name: Tests et application Windows
 on:
   push:
     branches: [main]
-    tags: ['v*']
   pull_request:
   workflow_dispatch:
 
@@ -45,8 +44,15 @@ jobs:
           name: MCS-Gestion-Windows
           path: desktop/dist/*.exe
           if-no-files-found: error
-      - name: Publier une version (tag v*)
-        if: startsWith(github.ref, 'refs/tags/v')
+      - name: Publier la version dans « Releases »
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: MCS Gestion 1.0.${{ github.run_number }}
+          target_commitish: ${{ github.sha }}
+          make_latest: true
+          body: |
+            Installateur Windows de MCS Gestion.
+            Téléchargez le fichier `.exe` ci-dessous, puis double-cliquez dessus pour installer.
           files: desktop/dist/*.exe

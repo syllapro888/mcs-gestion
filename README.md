@@ -30,13 +30,11 @@ Il marche sur **Windows** (application à installer, fichier .exe), sur **télé
 
 ## 1. Installer sur Windows (.exe)
 
-L'installateur est fabriqué **automatiquement par GitHub** à chaque modification :
+L'installateur est fabriqué **automatiquement par GitHub** à chaque modification du code :
 
-1. Sur GitHub, ouvrez l'onglet **Actions**, puis la dernière exécution « Tests et application Windows » (coche verte).
-2. En bas, dans **Artifacts**, téléchargez **MCS-Gestion-Windows** (fichier .zip).
-3. Décompressez-le, puis double-cliquez sur `MCS-Gestion-Setup-1.0.0.exe`.
-
-> Pour publier une version officielle téléchargeable dans **Releases**, créez un tag : `git tag v1.0.0 && git push --tags`.
+1. Sur la page GitHub du projet, cliquez sur **Releases** (colonne de droite).
+2. Dans la dernière version, téléchargez **`MCS-Gestion-Setup-1.0.0.exe`**.
+3. Double-cliquez sur le fichier et suivez l'installation.
 
 Au premier lancement, choisissez :
 
